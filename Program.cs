@@ -9,7 +9,7 @@ namespace Advert
         enum Menu
         {
             AddNewList, ShowAllLists, SelectList, WriteAllEntriesInList, AddNewEntryToList, DeleteEntryFromList,
-            SortEntries, 
+            SortEntries, FindEntries, WrtiteToFile, Quit
         }
         public static void Main(string[] args)
         {
@@ -17,8 +17,8 @@ namespace Advert
             OperatingAlgorithms.CurrentOperating = new List<AdInfo>();
             int index;
             string filePath;
-            int menu;
             SortingType type;
+            Menu menu;
             Console.WriteLine("Choose:\n 0 - Add new list;\n 1 - Show all lists;\n 2 - Select list; " 
                 +"3 - Write all entries in current list;\n 4 - Add new entry to current list;\n "
                 +"5 - Delete entry in current list by index;\n 6 - Sort all entries in current list;\n 7 - NOT IMPLEMENTED;\n "
@@ -26,17 +26,10 @@ namespace Advert
             while (true)
             {
                 Console.WriteLine("------------------");
-                try
-                {
-                    menu = int.Parse(Console.ReadLine());
-                }
-                catch (FormatException)
-                {
-                    continue;
-                }
+                menu = (Menu)Enum.Parse(typeof(Menu),Console.ReadLine());
                 switch (menu)
                 {
-                    case 0:
+                    case Menu.AddNewList:
                         Console.WriteLine("Choose file type: 0 - Json; 1 - XML; 2 - Create empty list");
                         try
                         {
@@ -81,10 +74,10 @@ namespace Advert
                             break;
                         }
                         break;
-                    case 1:
+                    case Menu.ShowAllLists:
                         ConsoleOperating.ShowAllLists(OperatingAlgorithms.AllLists);
                         break;
-                    case 2:
+                    case Menu.SelectList:
                         Console.WriteLine("------------------");
                         Console.WriteLine("Specify index:");
                         try
@@ -98,7 +91,7 @@ namespace Advert
                         OperatingAlgorithms.ChooseList(index);
                         Console.WriteLine("List Choosen: {0}", index);
                         break;
-                    case 3:
+                    case Menu.WriteAllEntriesInList:
                         if (OperatingAlgorithms.CurrentOperating == null)
                         {
                             Console.WriteLine("Choose list first!");
@@ -106,7 +99,7 @@ namespace Advert
                         }
                         ConsoleOperating.ShowEntriesInCurrentList(OperatingAlgorithms.CurrentOperating);
                         break;
-                    case 4:
+                    case Menu.AddNewEntryToList:
                         if (OperatingAlgorithms.CurrentOperating == null)
                         {
                             Console.WriteLine("Choose list first!");
@@ -124,7 +117,7 @@ namespace Advert
                         }
                         OperatingAlgorithms.AddEntryToList(toValidate);
                         break;
-                    case 5:
+                    case Menu.DeleteEntryFromList:
                         if (OperatingAlgorithms.CurrentOperating == null)
                         {
                             Console.WriteLine("Choose list first!");
@@ -148,7 +141,7 @@ namespace Advert
                             Console.WriteLine("Wrong element");
                         }
                         break;
-                    case 6:
+                    case Menu.SortEntries:
                         if (OperatingAlgorithms.CurrentOperating == null)
                         {
                             Console.WriteLine("Choose list first!");
@@ -165,15 +158,24 @@ namespace Advert
                         }
                         OperatingAlgorithms.SortAllEntriesInList(type);
                         break;
-                    case 7:
+                    case Menu.FindEntries:
                         if (OperatingAlgorithms.CurrentOperating == null)
                         {
                             Console.WriteLine("Choose list first!");
                             break;
                         }
-                        
+                        Console.WriteLine("Write find key:");
+                        string key = Console.ReadLine();
+                        try
+                        {
+                            OperatingAlgorithms.FindEntryInCurrentList(key);
+                        }
+                        catch(Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
                         break;
-                    case 8:
+                    case Menu.WrtiteToFile:
                         if (OperatingAlgorithms.CurrentOperating == null)
                         {
                             Console.WriteLine("Choose list first!");
@@ -200,7 +202,7 @@ namespace Advert
                                 break;
                         }
                         break;
-                    case 9:
+                    case Menu.Quit:
                         return;
                     default:
                         break;
