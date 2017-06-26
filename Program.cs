@@ -13,8 +13,9 @@ namespace Advert
         }
         public static void Main(string[] args)
         {
-            OperatingAlgorithms.AllLists = new List<List<AdInfo>>();
-            OperatingAlgorithms.CurrentOperating = new List<AdInfo>();
+            OperatingAlgorithms OperatingAlgorithms = new OperatingAlgorithms();
+            SaveLoadAlgorithms SaveLoadAlgorithms = new SaveLoadAlgorithms();
+            ConsoleOperating ConsoleOperating = new ConsoleOperating();
             int index;
             string filePath;
             SortingType type;
@@ -156,7 +157,7 @@ namespace Advert
                         {
                             continue;
                         }
-                        OperatingAlgorithms.SortAllEntriesInList(type);
+                        OperatingAlgorithms.SortAllEntriesInList(OperatingAlgorithms.CurrentOperating, type);
                         break;
                     case Menu.FindEntries:
                         if (OperatingAlgorithms.CurrentOperating == null)
@@ -168,7 +169,7 @@ namespace Advert
                         string key = Console.ReadLine();
                         try
                         {
-                            OperatingAlgorithms.FindEntryInCurrentList(key);
+                            OperatingAlgorithms.FindEntryInCurrentList(OperatingAlgorithms.CurrentOperating, key);
                         }
                         catch(Exception e)
                         {

@@ -14,77 +14,82 @@ namespace Advert
     }
     public class OperatingAlgorithms
     {
-        public static List<AdInfo> CurrentOperating;
-        public static List<List<AdInfo>> AllLists;
+        public List<AdInfo> CurrentOperating;
+        public List<List<AdInfo>> AllLists;
 
-        
+        public OperatingAlgorithms()
+        {
+            CurrentOperating = new List<AdInfo>();
+            AllLists = new List<List<AdInfo>>();
+        }
 
-        public static void ChooseList(int index)
+        public void ChooseList(int index)
         {
             CurrentOperating = AllLists.ElementAt(index);
         }
-        public static void CreateEmptyList()
+        public void CreateEmptyList()
         {
             AllLists.Add(new List<AdInfo>());
         }
-        public static void AddEntryToList(AdInfo ad)
+        public void AddEntryToList(AdInfo ad)
         {
             CurrentOperating.Add(ad);
         }
-        public static void DeleteEntryFromList(int index)
+        public void DeleteEntryFromList(int index)
         {
             CurrentOperating.RemoveAt(index);
         }
-        public static void SortAllEntriesInList(SortingType type)
+        public List<AdInfo> SortAllEntriesInList(List<AdInfo> sortList, SortingType type)
         {
-
+            List<AdInfo> sorted = new List<AdInfo>();
             switch (type)
             {
                 case SortingType.AdvertizeDescription:
-                    CurrentOperating.OrderBy(r => r.AdvertizeDescription);
+                    sorted = sortList.OrderBy(sort => sort.AdvertizeDescription).ToList();
                     break;
                 case SortingType.PersonName:
-                    CurrentOperating.OrderBy(r => r.Person.Name);
+                    sorted = sortList.OrderBy(sort => sort.Person.Name).ToList();
                     break;
                 case SortingType.PersonSurname:
-                    CurrentOperating.OrderBy(r => r.Person.Surname);
+                    sorted = sortList.OrderBy(sort => sort.Person.Surname).ToList();
                     break;
                 case SortingType.PhoneNumber:
-                    CurrentOperating.OrderBy(r => r.PhoneNumber);
+                    sorted = sortList.OrderBy(sort => sort.PhoneNumber).ToList();
                     break;
                 case SortingType.Price:
-                    CurrentOperating.OrderBy(r => r.Price);
+                    sorted = sortList.OrderBy(sort => sort.Price).ToList();
                     break;
                 default:
                     break;
             }
+            return sorted;
         }
-        public static List<AdInfo> FindEntryInCurrentList(string findKey)
+        public List<AdInfo> FindEntryInCurrentList(List<AdInfo> findList, string findKey)
         {
             List<AdInfo> result = new List<AdInfo>();
-            if (CurrentOperating.Exists(r => r.AdvertizeDescription.Equals(findKey)))
+            if (findList.Exists(r => r.AdvertizeDescription.Equals(findKey)))
             {
-                result = CurrentOperating.FindAll((r => r.AdvertizeDescription.Equals(findKey)));
+                result = findList.FindAll((r => r.AdvertizeDescription.Equals(findKey))).ToList();
                 return result;
             }
-            if (CurrentOperating.Exists(r => r.Person.Name.Equals(findKey)))
+            if (findList.Exists(r => r.Person.Name.Equals(findKey)))
             {
-                result = CurrentOperating.FindAll((r => r.Person.Name.Equals(findKey)));
+                result = findList.FindAll((r => r.Person.Name.Equals(findKey))).ToList();
                 return result;
             }
-            if (CurrentOperating.Exists(r => r.Person.Surname.Equals(findKey)))
+            if (findList.Exists(r => r.Person.Surname.Equals(findKey)))
             {
-                result = CurrentOperating.FindAll((r => r.Person.Surname.Equals(findKey)));
+                result = findList.FindAll((r => r.Person.Surname.Equals(findKey))).ToList();
                 return result;
             }
-            if (CurrentOperating.Exists(r => r.PhoneNumber.Equals(findKey)))
+            if (findList.Exists(r => r.PhoneNumber.Equals(findKey)))
             {
-                result = CurrentOperating.FindAll((r => r.PhoneNumber.Equals(findKey)));
+                result = findList.FindAll((r => r.PhoneNumber.Equals(findKey))).ToList();
                 return result;
             }
-            if (CurrentOperating.Exists(r => r.Price.Equals(findKey)))
+            if (findList.Exists(r => r.Price.Equals(findKey)))
             {
-                result = CurrentOperating.FindAll((r => r.Price.Equals(findKey)));
+                result = findList.FindAll((r => r.Price.Equals(findKey))).ToList();
                 return result;
             }
             throw new Exception("No Matches found");

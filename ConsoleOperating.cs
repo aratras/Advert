@@ -5,7 +5,7 @@ namespace Advert
 {
     public class ConsoleOperating
     {
-        public static AdInfo ReadFromConsole()
+        public AdInfo ReadFromConsole()
         {
             Console.Write("Advertize Description:");
             string advertizeDescription = Console.ReadLine();
@@ -19,7 +19,7 @@ namespace Advert
             int price = int.Parse(Console.ReadLine());
             return new AdInfo(advertizeDescription, responsibleName, responsibleSurname, phoneNumber, price);
         }
-        public static void ShowEntriesInCurrentList(List<AdInfo> toShow)
+        public void ShowEntriesInCurrentList(List<AdInfo> toShow)
         {
             foreach (AdInfo item in toShow)
             {
@@ -27,7 +27,7 @@ namespace Advert
                 Console.WriteLine(item.ToString());
             }
         }
-        public static void ShowAllLists(List<List<AdInfo>> allLists)
+        public void ShowAllLists(List<List<AdInfo>> allLists)
         {
             int index = 0;
             Console.WriteLine("------------------");

@@ -7,7 +7,7 @@ namespace Advert
 {
     public class SaveLoadAlgorithms
     {
-        public static List<AdInfo> ReadFROMJson(string filePath)
+        public List<AdInfo> ReadFROMJson(string filePath)
         {
             List<AdInfo> advInfoList = new List<AdInfo>();
             AdInfo temp = new AdInfo();
@@ -22,7 +22,7 @@ namespace Advert
             }
             return advInfoList;
         }
-        public static List<AdInfo> ReadFROMXml(string filePath)
+        public List<AdInfo> ReadFROMXml(string filePath)
         {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<AdInfo>));
             List<AdInfo> advInfoList = new List<AdInfo>();
@@ -32,7 +32,7 @@ namespace Advert
             }
             return advInfoList;
         }
-        public static void WriteTOJson(List<AdInfo> toWrite, string filePath)
+        public void WriteTOJson(List<AdInfo> toWrite, string filePath)
         {
             JsonSerializer jsonSerializer = new JsonSerializer();
             using (StreamWriter filestream = new StreamWriter(filePath, append: false))
@@ -44,7 +44,7 @@ namespace Advert
                 }
             }
         }
-        public static void WriteTOXml(List<AdInfo> toWrite, string filePath)
+        public void WriteTOXml(List<AdInfo> toWrite, string filePath)
         {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<AdInfo>));
             using (TextWriter filestream = new StreamWriter(filePath))
