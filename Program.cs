@@ -157,7 +157,7 @@ namespace Advert
                         {
                             continue;
                         }
-                        OperatingAlgorithms.SortAllEntriesInList(OperatingAlgorithms.CurrentOperating, type);
+                        OperatingAlgorithms.SortAllEntriesInList(type);
                         break;
                     case Menu.FindEntries:
                         if (OperatingAlgorithms.CurrentOperating == null)
@@ -169,7 +169,7 @@ namespace Advert
                         string key = Console.ReadLine();
                         try
                         {
-                            OperatingAlgorithms.FindEntryInCurrentList(OperatingAlgorithms.CurrentOperating, key);
+                            OperatingAlgorithms.FindEntryInCurrentList(key);
                         }
                         catch(Exception e)
                         {

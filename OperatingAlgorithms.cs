@@ -39,60 +39,57 @@ namespace Advert
         {
             CurrentOperating.RemoveAt(index);
         }
-        public List<AdInfo> SortAllEntriesInList(List<AdInfo> sortList, SortingType type)
+        public List<AdInfo> SortAllEntriesInList(SortingType type)
         {
             List<AdInfo> sorted = new List<AdInfo>();
             switch (type)
             {
                 case SortingType.AdvertizeDescription:
-                    sorted = sortList.OrderBy(sort => sort.AdvertizeDescription).ToList();
+                    sorted = CurrentOperating.OrderBy(sort => sort.AdvertizeDescription).ToList();
                     break;
                 case SortingType.PersonName:
-                    sorted = sortList.OrderBy(sort => sort.Person.Name).ToList();
+                    sorted = CurrentOperating.OrderBy(sort => sort.Person.Name).ToList();
                     break;
                 case SortingType.PersonSurname:
-                    sorted = sortList.OrderBy(sort => sort.Person.Surname).ToList();
+                    sorted = CurrentOperating.OrderBy(sort => sort.Person.Surname).ToList();
                     break;
                 case SortingType.PhoneNumber:
-                    sorted = sortList.OrderBy(sort => sort.PhoneNumber).ToList();
+                    sorted = CurrentOperating.OrderBy(sort => sort.PhoneNumber).ToList();
                     break;
                 case SortingType.Price:
-                    sorted = sortList.OrderBy(sort => sort.Price).ToList();
+                    sorted = CurrentOperating.OrderBy(sort => sort.Price).ToList();
                     break;
                 default:
                     break;
             }
             return sorted;
         }
-        public List<AdInfo> FindEntryInCurrentList(List<AdInfo> findList, string findKey)
+        public List<AdInfo> FindEntryInCurrentList(string findKey)
         {
+            int priceKey;
             List<AdInfo> result = new List<AdInfo>();
-            if (findList.Exists(r => r.AdvertizeDescription.Equals(findKey)))
+            try
             {
-                result = findList.FindAll((r => r.AdvertizeDescription.Equals(findKey))).ToList();
-                return result;
+                priceKey = int.Parse(findKey);
             }
-            if (findList.Exists(r => r.Person.Name.Equals(findKey)))
+            catch (Exception)
+            { 
+                priceKey = int.MinValue;
+            }
+            foreach (AdInfo item in CurrentOperating)
             {
-                result = findList.FindAll((r => r.Person.Name.Equals(findKey))).ToList();
-                return result;
+                if (item.AdvertizeDescription.Contains(findKey) || item.Person.Name.Contains(findKey)
+                        || item.Person.Surname.Contains(findKey) || item.PhoneNumber.Contains(findKey)
+                        || item.Price.Equals(priceKey))
+                {
+                    result.Add(item);
+                }
             }
-            if (findList.Exists(r => r.Person.Surname.Equals(findKey)))
+            if (result.Count == 0)
             {
-                result = findList.FindAll((r => r.Person.Surname.Equals(findKey))).ToList();
-                return result;
+                throw new Exception("No Matches found");
             }
-            if (findList.Exists(r => r.PhoneNumber.Equals(findKey)))
-            {
-                result = findList.FindAll((r => r.PhoneNumber.Equals(findKey))).ToList();
-                return result;
-            }
-            if (findList.Exists(r => r.Price.Equals(findKey)))
-            {
-                result = findList.FindAll((r => r.Price.Equals(findKey))).ToList();
-                return result;
-            }
-            throw new Exception("No Matches found");
+            return result;
         }
     }
 }
